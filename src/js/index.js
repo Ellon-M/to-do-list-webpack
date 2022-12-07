@@ -43,6 +43,5 @@ class ListComponent {
 
 const list = new ListComponent();
 
-window.onload = () => {
-  list.generateList();
-};
+list.generateList();
+
