@@ -44,4 +44,3 @@ class ListComponent {
 const list = new ListComponent();
 
 list.generateList();
-
