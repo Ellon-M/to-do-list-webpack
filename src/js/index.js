@@ -52,7 +52,7 @@ class ListComponent {
     }
 
     this.listContainer.appendChild(list);
-    
+
     /* eslint-disable */
     const m = new ManageList();
     /* eslint-disable */
