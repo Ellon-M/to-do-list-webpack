@@ -28,7 +28,13 @@ class ListComponent {
         const checked = document.createElement('span');
         const checkbox = document.createElement('input');
         const del = document.createElement('img');
-        description.className = 'list-description';
+        if (task.completed === true) {
+          description.className = 'list-description striked';
+          checkbox.checked = true;
+        } else {
+          description.className = 'list-description';
+          checkbox.checked = false;
+        }
         checked.className = 'checked';
         checkbox.className = 'checkbox';
         checkbox.id = task.index;
