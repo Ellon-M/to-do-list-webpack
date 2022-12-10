@@ -51,7 +51,17 @@ class ListComponent {
       list.appendChild(emptyMessage);
     }
 
+    const bottomLink = document.createElement('div');
+    const clearLink = document.createElement('a');
+
+    bottomLink.className = 'bottom-link';
+    clearLink.className = 'clear-link';
+    clearLink.innerText = 'clear all completed';
+
+    bottomLink.appendChild(clearLink);
+
     this.listContainer.appendChild(list);
+    this.listContainer.appendChild(bottomLink);
 
     /* eslint-disable */
     const m = new ManageList();

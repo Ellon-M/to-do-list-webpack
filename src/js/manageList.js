@@ -7,6 +7,7 @@ export default class ManageList {
     this.listInput = document.getElementById('to-do-input');
     this.listSubmit = document.getElementById('submit-new-item');
     this.listDescription = document.querySelectorAll('.list-description');
+    this.clear = document.querySelector('.clear-link');
     this.initEvents();
   }
 
@@ -51,6 +52,13 @@ export default class ManageList {
         }
       });
     });
+
+    this.clear.addEventListener('click', () => {
+      this.clearCompleted();
+      /* eslint-disable */
+      location.reload();
+      /* eslint-disable */
+    })
   }
 
   add() {
@@ -85,29 +93,43 @@ export default class ManageList {
   }
 
   completed(id) {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      this.taskList.push(JSON.parse(localStorage.getItem(key)));
-    });
-    this.taskList.forEach((task) => {
+    let retreived = JSON.parse(localStorage.getItem('tasks'));
+
+    retreived.forEach((task) => {
       if (id === task.index) {
         task.completed = true;
-        localStorage.setItem(`task${id}`, JSON.stringify(task));
       }
+      localStorage.setItem('tasks', JSON.stringify(retreived));
     });
+
+    this.listDescription.forEach((desc) => {
+      if (Number(desc.id) === id) {
+        desc.classList.add('striked');
+      }
+    })
   }
 
   cancelCompleted(id) {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      this.taskList.push(JSON.parse(localStorage.getItem(key)));
-    });
-    this.taskList.forEach((task) => {
+    let retreived = JSON.parse(localStorage.getItem('tasks'));
+    retreived.forEach((task) => {
       if (id === task.index) {
         task.completed = false;
-        localStorage.setItem(`task${id}`, JSON.stringify(task));
       }
+      localStorage.setItem('tasks', JSON.stringify(retreived));
     });
+
+    this.listDescription.forEach((desc) => {
+      if (Number(desc.id) === id) {
+        desc.classList.remove('striked');
+      }
+    })
+  }
+
+  clearCompleted() {
+    let retreived = JSON.parse(localStorage.getItem('tasks'));
+
+    const filtered = retreived.filter(task => task.completed !== true);
+    localStorage.setItem('tasks', JSON.stringify(filtered));
   }
 
   remove(id) {
