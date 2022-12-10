@@ -1,35 +1,49 @@
 import '../style.css';
-import tasks from './tasks.js';
+import ManageList from './manageList.js';
 
 class ListComponent {
   constructor() {
-    this.listContainer = document.querySelector('.list-container');
+    this.listContainer = document.querySelector('.list-wrap');
+    this.tasks = [];
   }
 
   generateList() {
-    const list = document.createElement('ul');
+    const list = document.querySelector('.list');
+
     const emptyMessage = document.createElement('p');
 
-    if (tasks.length > 0) {
-      list.className = 'to-do-list';
+    const taskData = JSON.parse(localStorage.getItem('tasks'));
 
-      const sortedTasks = tasks.sort((a, b) => a.index - b.index);
+    if (taskData !== null) {
+      taskData.forEach((task) => {
+        this.tasks.push(task);
+      });
+    }
 
-      sortedTasks.forEach((task) => {
+    if (this.tasks.length > 0) {
+      this.tasks.forEach((task) => {
         const listItem = document.createElement('li');
         listItem.className = 'list-item';
-        const description = document.createElement('span');
+        const description = document.createElement('label');
         const checked = document.createElement('span');
         const checkbox = document.createElement('input');
+        const del = document.createElement('img');
         description.className = 'list-description';
         checked.className = 'checked';
-        checkbox.id = 'checkbox';
+        checkbox.className = 'checkbox';
+        checkbox.id = task.index;
         checkbox.name = 'checkbox';
         checkbox.type = 'checkbox';
         checked.appendChild(checkbox);
-        description.innerText = task.description;
+        description.innerText = task.desc;
+        description.id = task.index;
+        del.className = 'destroy';
+        del.id = task.index;
+        del.src = 'https://img.icons8.com/ios/24/000000/null/delete--v1.png';
         listItem.appendChild(checked);
         listItem.appendChild(description);
+        listItem.appendChild(del);
+
         list.appendChild(listItem);
       });
     } else {
@@ -38,6 +52,10 @@ class ListComponent {
     }
 
     this.listContainer.appendChild(list);
+
+    /* eslint-disable */
+    const m = new ManageList();
+    /* eslint-disable */
   }
 }
 
