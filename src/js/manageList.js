@@ -1,3 +1,5 @@
+import clearCompleted from './clearCompleted.js';
+
 export default class ManageList {
   constructor() {
     this.taskList = [];
@@ -54,7 +56,7 @@ export default class ManageList {
     });
 
     this.clear.addEventListener('click', () => {
-      this.clearCompleted();
+      clearCompleted();
       /* eslint-disable */
       location.reload();
       /* eslint-disable */
@@ -123,13 +125,6 @@ export default class ManageList {
         desc.classList.remove('striked');
       }
     })
-  }
-
-  clearCompleted() {
-    let retreived = JSON.parse(localStorage.getItem('tasks'));
-
-    const filtered = retreived.filter(task => task.completed !== true);
-    localStorage.setItem('tasks', JSON.stringify(filtered));
   }
 
   remove(id) {
