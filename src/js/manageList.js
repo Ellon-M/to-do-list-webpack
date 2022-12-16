@@ -14,15 +14,17 @@ export default class ManageList {
   }
 
   initEvents() {
-    this.listSubmit.addEventListener('click', () => {
-      this.add();
-    });
-
-    this.listSubmit.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
+    if (this.listSubmit !== null) {
+      this.listSubmit.addEventListener('click', () => {
         this.add();
-      }
-    });
+      });
+
+      this.listSubmit.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          this.add();
+        }
+      });
+    }
 
     this.checkboxes.forEach((checkbox) => {
       checkbox.addEventListener('click', (e) => {
@@ -55,12 +57,14 @@ export default class ManageList {
       });
     });
 
-    this.clear.addEventListener('click', () => {
-      clearCompleted();
-      /* eslint-disable */
-      location.reload();
-      /* eslint-disable */
-    })
+    if (this.clear !== null) {
+      this.clear.addEventListener('click', () => {
+        clearCompleted();
+        /* eslint-disable */
+        location.reload();
+        /* eslint-disable */
+      })
+    }
   }
 
   add() {
@@ -71,7 +75,7 @@ export default class ManageList {
 
     const taskData = {
       index: retreived.length,
-      desc: this.listInput.value,
+      desc: this.listInput?.value,
       completed: false,
     };
     localStorage.setItem('task', JSON.stringify(taskData));
