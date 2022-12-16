@@ -100,6 +100,12 @@ Clone this repository to your desired folder:
 - Twitter: [@twitterhandle](https://twitter.com/ellonm4)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/ellon-m)
 
+👤 **Outkarm Johnson**
+
+- GitHub: [Outkarm](https://github.com/Outkarm)
+- GitHub: [Outkarm](https://github.com/Outkarm)
+- LinkedIn: [John Kpordje](https://www.linkedin.com/in/john-kpordje-866749241/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->

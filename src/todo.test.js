@@ -1,9 +1,15 @@
-// unit tests - add and remove functions
-
 import {
-  mockStorage, saveToStorage, addToList, removeFromStorage, removeFromList,
+  mockStorage,
+  saveToStorage,
+  addToList,
+  removeFromStorage,
+  removeFromList,
+  updateTask,
+  updateCompleted,
+  clearAllCompleted,
 } from './js/todo-operations.js';
 
+// unit tests - add and remove functions
 describe('add and remove to-do tasks', () => {
   test('localstorage set and get task items', () => {
     // Arrange
@@ -38,7 +44,14 @@ describe('add and remove to-do tasks', () => {
     const set = jest.fn();
 
     // Act
-    removeFromStorage([{ index: 0, desc: 'task 1' }, { index: 1, desc: 'task 2' }], 1, { set });
+    removeFromStorage(
+      [
+        { index: 0, desc: 'task 1' },
+        { index: 1, desc: 'task 2' },
+      ],
+      1,
+      { set },
+    );
 
     // Assert
     expect(mockStorage.tasks).toEqual([{ index: 0, desc: 'task 1' }]);
@@ -53,5 +66,74 @@ describe('add and remove to-do tasks', () => {
 
     // Assert
     expect(list).toHaveLength(1);
+  });
+});
+
+// unit tests - update/edit task, update completed, clear all completed
+describe('edit, update completed, clear all completed tasks', () => {
+  test('edit task description in localstorage', () => {
+    // Arrange
+    const get = jest.fn();
+    const set = jest.fn();
+    const setSpy = jest.spyOn(Storage.prototype, 'setItem');
+    const getSpy = jest.spyOn(Storage.prototype, 'getItem');
+
+    // Act
+    updateTask(
+      [
+        { index: 0, desc: 'task 2' },
+        { index: 1, desc: 'task 2' },
+      ],
+      'task 1',
+      0,
+      { get, set },
+    );
+
+    // Assert
+    expect(setSpy).toHaveBeenCalled();
+    expect(getSpy).toHaveBeenCalled();
+    expect(mockStorage.tasks[0]).toEqual({ index: 0, desc: 'task 1' });
+  });
+  test('update completed status', () => {
+    // Arrange
+    const set = jest.fn();
+    const setSpy = jest.spyOn(Storage.prototype, 'setItem');
+
+    // Act
+    updateCompleted(
+      [
+        { index: 0, desc: 'task 1', completed: false },
+        { index: 1, desc: 'task 2', completed: false },
+      ],
+      0,
+      { set },
+    );
+
+    // Assert
+    expect(setSpy).toHaveBeenCalled();
+    expect(mockStorage.tasks[0]).toEqual({
+      index: 0,
+      desc: 'task 1',
+      completed: true,
+    });
+  });
+  test('clear all completred tasks', () => {
+    // Arrange
+    const set = jest.fn();
+    const setSpy = jest.spyOn(Storage.prototype, 'setItem');
+    // Act
+    const filt = clearAllCompleted(
+      [
+        { index: 0, desc: 'task 1', completed: true },
+        { index: 1, desc: 'task 2', completed: false },
+        { index: 2, desc: 'task 3', completed: true },
+        { index: 3, desc: 'task 4', completed: true },
+      ],
+      { set },
+    );
+    // Assert
+    expect(setSpy).toHaveBeenCalled();
+    expect(filt).toHaveLength(1);
+    expect(filt).toEqual([{ index: 1, desc: 'task 2', completed: false }]);
   });
 });
