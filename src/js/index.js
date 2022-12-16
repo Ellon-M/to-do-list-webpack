@@ -1,7 +1,7 @@
-import '../style.css';
+// import '../style.css';
 import ManageList from './manageList.js';
 
-class ListComponent {
+export default class ListComponent {
   constructor() {
     this.listContainer = document.querySelector('.list-wrap');
     this.tasks = [];
@@ -23,6 +23,7 @@ class ListComponent {
     if (this.tasks.length > 0) {
       this.tasks.forEach((task) => {
         const listItem = document.createElement('li');
+        listItem.id = task.index;
         listItem.className = 'list-item';
         const description = document.createElement('label');
         const checked = document.createElement('span');
